@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 const Signup = () => {
@@ -7,12 +7,16 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const { user, signUp } = UserAuth();
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await signUp(email, password);
+      navigate("/netflix");
     } catch (error) {
+      alert("ops");
       console.log(error);
     }
   };
