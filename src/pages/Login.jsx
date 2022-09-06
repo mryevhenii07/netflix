@@ -1,7 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { user, logIn } = UserAuth();
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await logIn(email, password);
+      navigate("/netflix");
+    } catch (error) {
+      alert("ops");
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="w-full h-screen">
@@ -16,24 +35,27 @@ const Login = () => {
             <div className="max-w-[320px] mx-auto py-16">
               <h1 className="text-3xl font-bold">Sign In</h1>
               <form
-                //   onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
                 className="w-full flex flex-col py-4"
               >
                 <input
-                  //   onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="p-3 my-2 bg-gray-700 rouded"
                   type="email"
                   placeholder="Email"
                   autoComplete="email"
                 />
                 <input
-                  //   onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="p-3 my-2 bg-gray-700 rouded"
                   type="password"
                   placeholder="Password"
                   autoComplete="current-password"
                 />
-                <button className="bg-red-600 py-3 my-6 rounded font-bold">
+                <button
+                  type="submit"
+                  className="bg-red-600 py-3 my-6 rounded font-bold"
+                >
                   Sign In
                 </button>
                 <div className="flex justify-between items-center text-sm text-gray-600">
