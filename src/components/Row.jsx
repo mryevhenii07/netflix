@@ -9,7 +9,6 @@ const Row = ({ title, fetchUrl, rowId }) => {
   useEffect(() => {
     axios.get(fetchUrl).then((response) => setMovies(response.data.results));
   }, [fetchUrl]);
-  console.log(movies);
 
   const slideLeft = () => {
     var slider = document.getElementById("slider" + rowId);
